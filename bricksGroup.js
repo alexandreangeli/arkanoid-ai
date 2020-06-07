@@ -1,6 +1,5 @@
 class BricksGroup {
   constructor() {
-    this.color = "#0095DD";
     this.padding = 10;
     this.rowCount = 3;
     this.colCount = 5;
@@ -48,7 +47,7 @@ class BricksGroup {
         }
         ctx.beginPath();
         ctx.rect(brick.x, brick.y, this.width, this.height);
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = brick.color;
         ctx.fill();
         ctx.closePath();
       }
