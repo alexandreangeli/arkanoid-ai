@@ -29,19 +29,21 @@ class Ball {
     ctx.closePath();
   }
 
+  destroy() {
+    this.destroyed = true;
+
+    let ballsNotDestroyed = ballShooter.balls.filter((ball) => !ball.destroyed);
+    if (ballsNotDestroyed.length == 0) {
+      ballShooter.balls = [];
+      ballShooter.maxBalls++;
+      bricksGroup.rowCount++;
+      bricksGroup.addRow();
+    }
+  }
+
   move() {
     if (this.y > this.yMax) {
-      this.destroyed = true;
-
-      let ballsNotDestroyed = ballShooter.balls.filter(
-        (ball) => !ball.destroyed
-      );
-      if (ballsNotDestroyed.length == 0) {
-        ballShooter.balls = [];
-        ballShooter.maxBalls++;
-        bricksGroup.rowCount++;
-        bricksGroup.addRow();
-      }
+      this.destroy();
     } else if (this.y < this.yMin) {
       this.dy *= -1;
     } else if (this.x < this.yMin || this.x > this.xMax) {
@@ -75,6 +77,7 @@ class Ball {
           if (collisionSide.x || collisionSide.y) {
             score.value++;
             brick.destroyed = true;
+            this.destroy();
             break outerLoop;
           }
         }
