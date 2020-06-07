@@ -1,7 +1,7 @@
 class Ball {
   constructor() {
     this.color = "#0095DD";
-    this.radius = 5;
+    this.radius = canvas.width * 0.015;
 
     this.x0 = ballShooter.x1;
     this.y0 = ballShooter.y1;

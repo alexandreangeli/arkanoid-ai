@@ -1,12 +1,11 @@
 class BricksGroup {
   constructor() {
-    this.padding = 10;
+    this.padding = canvas.width * 0.02;
     this.rowCount = 3;
     this.colCount = 8;
     this.width =
       (canvas.width - this.padding * (this.colCount + 1)) / this.colCount;
     this.height = this.width;
-    this.offSetTop = 50;
     this.bricks = [];
 
     this.mountBricks();

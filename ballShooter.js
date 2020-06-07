@@ -3,7 +3,7 @@ class BallShooter {
     this.angle = -90;
     this.minAngle = -170;
     this.maxAngle = -10;
-    this.size = 50;
+    this.size = canvas.height * 0.08;
     this.x0 = canvas.width / 2;
     this.y0 = canvas.height;
     this.maxBalls = 1;

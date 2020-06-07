@@ -1,7 +1,15 @@
 var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
-canvas.width = 300;
-canvas.height = 500;
+
+canvas.width = window.innerWidth - 2;
+canvas.height = window.innerHeight;
+
+if (canvas.width > 500) {
+  canvas.width = 500;
+}
+if (canvas.height > 700) {
+  canvas.height = 700;
+}
 
 var score = new Score();
 var ballShooter = new BallShooter();
