@@ -2,7 +2,7 @@ class BricksGroup {
   constructor() {
     this.padding = 10;
     this.rowCount = 3;
-    this.colCount = 10;
+    this.colCount = 8;
     this.width =
       (canvas.width - this.padding * (this.colCount + 1)) / this.colCount;
     this.height = this.width;

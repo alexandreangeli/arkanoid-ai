@@ -1,6 +1,6 @@
 var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth * 0.9;
+canvas.width = 300;
 canvas.height = 500;
 
 var score = new Score();
