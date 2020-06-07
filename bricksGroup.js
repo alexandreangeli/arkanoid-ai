@@ -22,7 +22,7 @@ class BricksGroup {
     for (let row of this.bricks) {
       for (let brick of row) {
         brick.y += this.padding + this.height;
-        if (brick.y + brick.height > canvas.height) {
+        if (!brick.destroyed && brick.y + brick.height > canvas.height) {
           setTimeout(() => {
             gameOver();
           }, 100);
