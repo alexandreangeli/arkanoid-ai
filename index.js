@@ -1,7 +1,7 @@
 var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth * 0.9;
-canvas.height = window.innerHeight * 0.7;
+canvas.height = 500;
 
 var score = new Score();
 var ballShooter = new BallShooter();
@@ -23,6 +23,13 @@ function mouseMoveHandler(e) {
       (Math.atan2(relativeY - ballShooter.y0, relativeX - ballShooter.x0) *
         180) /
       Math.PI;
+
+    if (ballShooter.angle > ballShooter.maxAngle) {
+      ballShooter.angle = ballShooter.maxAngle;
+    }
+    if (ballShooter.angle < ballShooter.minAngle) {
+      ballShooter.angle = ballShooter.minAngle;
+    }
   }
 }
 function touchMoveHandler(e) {
@@ -34,6 +41,13 @@ function touchMoveHandler(e) {
       (Math.atan2(relativeY - ballShooter.y0, relativeX - ballShooter.x0) *
         180) /
       Math.PI;
+
+    if (ballShooter.angle > ballShooter.maxAngle) {
+      ballShooter.angle = ballShooter.maxAngle;
+    }
+    if (ballShooter.angle < ballShooter.minAngle) {
+      ballShooter.angle = ballShooter.minAngle;
+    }
   }
 }
 function onClickHandler() {

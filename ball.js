@@ -75,9 +75,9 @@ class Ball {
             this.dy *= -1;
           }
           if (collisionSide.x || collisionSide.y) {
-            score.value++;
             brick.life--;
             if (!brick.life) {
+              score.value++;
               brick.destroyed = true;
             }
             break outerLoop;

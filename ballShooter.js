@@ -1,6 +1,8 @@
 class BallShooter {
   constructor() {
-    this.angle = 270;
+    this.angle = -90;
+    this.minAngle = -170;
+    this.maxAngle = -10;
     this.size = 50;
     this.x0 = canvas.width / 2;
     this.y0 = canvas.height;
