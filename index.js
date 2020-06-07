@@ -4,104 +4,52 @@ canvas.width = window.innerWidth * 0.9;
 canvas.height = window.innerHeight * 0.7;
 
 var score = new Score();
-var paddle = new Paddle();
-var ball = new Ball();
+var ballShooter = new BallShooter();
 var bricksGroup = new BricksGroup();
-var lives = new Lives();
 
 var rightPressed = false;
 var leftPressed = false;
 
-document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("mousemove", mouseMoveHandler, false);
 document.addEventListener("touchmove", touchMoveHandler, false);
+document.addEventListener("click", onClickHandler, false);
 
-function keyDownHandler(e) {
-  e.preventDefault();
-  if (e.key == "Right" || e.key == "ArrowRight") {
-    rightPressed = true;
-  }
-  if (e.key == "Left" || e.key == "ArrowLeft") {
-    leftPressed = true;
-  }
-}
-function keyUpHandler(e) {
-  e.preventDefault();
-  if (e.key == "Right" || e.key == "ArrowRight") {
-    rightPressed = false;
-  }
-  if (e.key == "Left" || e.key == "ArrowLeft") {
-    leftPressed = false;
-  }
-}
 function mouseMoveHandler(e) {
   e.preventDefault();
-  var relativeX = e.clientX - canvas.offsetLeft;
-  if (relativeX > 0 && relativeX < canvas.width) {
-    paddle.x = relativeX - paddle.width / 2;
+  if (!ballShooter.balls.length) {
+    var relativeX = e.clientX - canvas.offsetLeft;
+    var relativeY = e.clientY - canvas.offsetTop;
+    ballShooter.angle =
+      (Math.atan2(relativeY - ballShooter.y0, relativeX - ballShooter.x0) *
+        180) /
+      Math.PI;
   }
 }
 function touchMoveHandler(e) {
   e.preventDefault();
-  var relativeX = e.touches[0].clientX - canvas.offsetLeft;
-  if (relativeX > 0 && relativeX < canvas.width) {
-    paddle.x = relativeX - paddle.width / 2;
+  if (!ballShooter.balls.length) {
+    var relativeX = e.touches[0].clientX - canvas.offsetLeft;
+    var relativeY = e.touches[0].clientY - canvas.offsetTop;
+    ballShooter.angle =
+      (Math.atan2(relativeY - ballShooter.y0, relativeX - ballShooter.x0) *
+        180) /
+      Math.PI;
   }
 }
+function onClickHandler() {
+  if (!ballShooter.balls.length) {
+    ballShooter.shoot();
 
-function moveBall() {
-  if (ball.y < ball.yMin) {
-    ball.dy *= -1;
-  } else if (ball.y > paddle.y - ball.radius) {
-    if (
-      ball.dy > 0 &&
-      ball.x >= paddle.x &&
-      ball.x <= paddle.x + paddle.width
-    ) {
-      ball.dy *= -1;
-    }
-  } else if (ball.x < ball.yMin || ball.x > ball.xMax) {
-    ball.dx *= -1;
-  } else {
-    outerLoop: for (var c = 0; c < bricksGroup.colCount; c++) {
-      for (var r = 0; r < bricksGroup.rowCount; r++) {
-        var brick = bricksGroup.bricks[c][r];
-        if (brick.destroyed) {
-          continue;
-        }
-
-        let collisionSide = collisionDetection(
-          {
-            x: ball.x,
-            y: ball.y,
-            r: ball.radius,
-          },
-          {
-            x: brick.x,
-            y: brick.y,
-            h: bricksGroup.height,
-            w: bricksGroup.width,
-          }
-        );
-
-        if (collisionSide.x) {
-          ball.dx *= -1;
-        }
-        if (collisionSide.y) {
-          ball.dy *= -1;
-        }
-        if (collisionSide.x || collisionSide.y) {
-          score.value++;
-          brick.destroyed = true;
-          break outerLoop;
-        }
+    let ballNumber = 1;
+    let interval = setInterval(() => {
+      if (ballNumber == ballShooter.maxBalls) {
+        clearInterval(interval);
+      } else {
+        ballShooter.shoot();
+        ballNumber++;
       }
-    }
+    }, 50);
   }
-
-  ball.x += ball.dx;
-  ball.y += ball.dy;
 }
 
 function collisionDetection(circle, rect) {
@@ -129,21 +77,6 @@ function collisionDetection(circle, rect) {
     : { y: false, x: false };
 }
 
-function victory() {
-  alert("YOU WIN, CONGRATULATIONS!");
-  document.location.reload();
-}
-
-function lostLife() {
-  lives.value--;
-  if (!lives.value) {
-    gameOver();
-  } else {
-    ball.reset();
-    paddle.reset();
-  }
-}
-
 function gameOver() {
   alert("GAME OVER");
   document.location.reload();
@@ -153,22 +86,18 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   score.draw();
-  lives.draw();
   bricksGroup.draw();
-  paddle.draw();
-  ball.draw();
+  ballShooter.draw();
 
-  moveBall();
-
-  if (ball.y > ball.yMax) {
-    lostLife();
+  let ballsNotDestroyed = ballShooter.balls.filter((ball) => !ball.destroyed);
+  if (ballsNotDestroyed.length != 0) {
+    ballsNotDestroyed.forEach((ball) => {
+      ball.move();
+      ball.draw();
+    });
   }
 
-  if (score.value == bricksGroup.rowCount * bricksGroup.colCount) {
-    victory();
-  } else {
-    requestAnimationFrame(draw);
-  }
+  requestAnimationFrame(draw);
 }
 
 draw();
