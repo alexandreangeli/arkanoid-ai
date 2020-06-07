@@ -13,6 +13,7 @@ var leftPressed = false;
 document.addEventListener("mousemove", mouseMoveHandler, false);
 document.addEventListener("touchmove", touchMoveHandler, false);
 document.addEventListener("click", onClickHandler, false);
+document.addEventListener("touchend", onClickHandler, false);
 
 function mouseMoveHandler(e) {
   e.preventDefault();
