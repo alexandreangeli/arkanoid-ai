@@ -6,7 +6,7 @@ class Brick {
     this.height = height;
     this.destroyed = destroyed;
     this.life =
-      Math.floor(Math.random() * Math.floor(ballShooter.maxBalls / 3)) + 1;
+      Math.floor(Math.random() * Math.floor(ballShooter.maxBalls / 2)) + 1;
     this.color = "#0095DD";
   }
 }
