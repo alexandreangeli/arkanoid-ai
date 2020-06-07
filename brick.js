@@ -6,7 +6,7 @@ class Brick {
     this.height = height;
     this.destroyed = Math.random() > 0.6;
 
-    random = randomIntFromInterval(0, 100);
+    let = random = randomIntFromInterval(0, 100);
     if (random < 25) {
       this.life = Math.floor(ballShooter.maxBalls / 2);
     }
