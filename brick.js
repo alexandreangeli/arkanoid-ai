@@ -8,7 +8,7 @@ class Brick {
 
     let random = randomIntFromInterval(0, 100);
     if (random < 25) {
-      this.life = Math.floor(ballShooter.maxBalls / 2);
+      this.life = Math.floor(ballShooter.maxBalls / 2) || 1;
     }
     if (random >= 25 && random < 75) {
       this.life = ballShooter.maxBalls;
