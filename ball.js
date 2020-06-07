@@ -8,8 +8,8 @@ class Ball {
     this.x = this.x0;
     this.y = this.y0;
 
-    this.dx0 = (-1 * (ballShooter.x0 - ballShooter.x1)) / 10;
-    this.dy0 = (-1 * (ballShooter.y0 - ballShooter.y1)) / 10;
+    this.dx0 = (-1 * (ballShooter.x0 - ballShooter.x1)) / 5;
+    this.dy0 = (-1 * (ballShooter.y0 - ballShooter.y1)) / 5;
     this.dx = this.dx0;
     this.dy = this.dy0;
 
